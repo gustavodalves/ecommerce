@@ -8,6 +8,12 @@ func NewCart() *Cart {
 	return &Cart{}
 }
 
+func RecoverCart(products []*Product) *Cart {
+	return &Cart{
+		Products: products,
+	}
+}
+
 func (c *Cart) AddProduct(product *Product) {
 	c.Products = append(c.Products, product)
 }
