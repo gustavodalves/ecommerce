@@ -10,7 +10,7 @@ type Product struct {
 	Price float64
 }
 
-func (p *Product) NewProduct(name string, price float64) *Product {
+func NewProduct(name string, price float64) *Product {
 	return &Product{
 		Id:    uuid.New().String(),
 		Name:  name,

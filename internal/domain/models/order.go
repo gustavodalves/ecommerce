@@ -1,6 +1,10 @@
 package models
 
-import "errors"
+import (
+	"errors"
+
+	"github.com/google/uuid"
+)
 
 type OrderStatus interface {
 	ProcessOrder(o *Order) error
@@ -52,12 +56,14 @@ func (rs *RejectedStatus) CancelOrder(o *Order) error {
 }
 
 type Order struct {
+	Id     string
 	Cart   *Cart
 	Status OrderStatus
 }
 
 func NewOrder() *Order {
 	return &Order{
+		Id:     uuid.NewString(),
 		Cart:   &Cart{},
 		Status: &CreatedStatus{},
 	}
