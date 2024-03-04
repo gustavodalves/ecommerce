@@ -9,6 +9,7 @@ import (
 type OrderStatus interface {
 	ProcessOrder(o *Order) error
 	CancelOrder(o *Order) error
+	GetStatus() string
 }
 
 type CreatedStatus struct{}
@@ -23,6 +24,10 @@ func (cs *CreatedStatus) CancelOrder(o *Order) error {
 	return nil
 }
 
+func (cs *CreatedStatus) GetStatus() string {
+	return "created"
+}
+
 type PendingStatus struct{}
 
 func (ps *PendingStatus) ProcessOrder(o *Order) error {
@@ -35,6 +40,10 @@ func (ps *PendingStatus) CancelOrder(o *Order) error {
 	return nil
 }
 
+func (ps *PendingStatus) GetStatus() string {
+	return "pending"
+}
+
 type ApprovedStatus struct{}
 
 func (as *ApprovedStatus) ProcessOrder(o *Order) error {
@@ -45,6 +54,10 @@ func (as *ApprovedStatus) CancelOrder(o *Order) error {
 	return errors.New("cannot cancel an already approved order")
 }
 
+func (as *ApprovedStatus) GetStatus() string {
+	return "approved"
+}
+
 type RejectedStatus struct{}
 
 func (rs *RejectedStatus) ProcessOrder(o *Order) error {
@@ -53,6 +66,10 @@ func (rs *RejectedStatus) ProcessOrder(o *Order) error {
 
 func (rs *RejectedStatus) CancelOrder(o *Order) error {
 	return errors.New("cannot cancel a rejected order again")
+}
+
+func (rs *RejectedStatus) GetStatus() string {
+	return "rejected"
 }
 
 type Order struct {
